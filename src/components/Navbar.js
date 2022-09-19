@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 //styles
 import styles from "./navbar.module.css";
-import { async } from "@firebase/util";
 
 const Navbar = () => {
   //states
