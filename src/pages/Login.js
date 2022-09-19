@@ -10,12 +10,14 @@ import { useNavigate } from "react-router-dom";
 import styles from "./login.module.css";
 
 const Login = () => {
+  //states
   const [data, setData] = useState({
     email: "",
     password: "",
     error: null,
     loading: false,
   });
+
   const { email, password, error, loading } = data;
   const navigate = useNavigate();
 

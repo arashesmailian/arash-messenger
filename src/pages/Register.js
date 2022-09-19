@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
 
 const Register = () => {
+  //states
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -17,6 +18,7 @@ const Register = () => {
     error: null,
     loading: false,
   });
+
   const { name, email, password, error, loading } = data;
   const navigate = useNavigate();
 
