@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 
 //components
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc, Timestamp } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { updateDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 //styles
-import styles from "./register.module.css";
+import styles from "./login.module.css";
 
-const Register = () => {
+const Login = () => {
   const [data, setData] = useState({
-    name: "",
     email: "",
     password: "",
     error: null,
     loading: false,
   });
-  const { name, email, password, error, loading } = data;
+  const { email, password, error, loading } = data;
   const navigate = useNavigate();
 
   //functions
@@ -27,26 +26,17 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setData({ ...data, error: null, loading: true });
-    if (!name || !email || !password) {
+    if (!email || !password) {
       setData({ ...data, error: "all fields are required!" });
     }
     try {
-      //registering new user
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      //login user
+      const result = await signInWithEmailAndPassword(auth, email, password);
       // setting user in firestore database
-      await setDoc(doc(db, "users", result.user.uid), {
-        uid: result.user.uid,
-        name,
-        email,
-        createdAt: Timestamp.fromDate(new Date()),
+      await updateDoc(doc(db, "users", result.user.uid), {
         isOnline: true,
       });
       setData({
-        name: "",
         email: "",
         password: "",
         error: null,
@@ -59,12 +49,8 @@ const Register = () => {
   };
   return (
     <section>
-      <h3>Create an Account</h3>
+      <h3>Log into your Account</h3>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.input_container}>
-          <label htmlFor="name">Name</label>
-          <input type="text" name="name" value={name} onChange={handleChange} />
-        </div>
         <div className={styles.input_container}>
           <label htmlFor="email">Email</label>
           <input
@@ -86,7 +72,7 @@ const Register = () => {
         {error ? <p className={styles.error}>{error}</p> : null}
         <div className={styles.btn_container}>
           <button className={styles.btn} disabled={loading}>
-            {loading ? "Creating ..." : "Register"}
+            {loading ? "Logging in ..." : "Login"}
           </button>
         </div>
       </form>
@@ -94,4 +80,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
