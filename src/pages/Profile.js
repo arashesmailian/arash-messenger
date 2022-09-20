@@ -16,7 +16,6 @@ import { getDoc, doc, updateDoc } from "firebase/firestore";
 
 //******styles
 import styles from "./profile.module.css";
-import { async } from "@firebase/util";
 
 const Profile = () => {
   //******states
