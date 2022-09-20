@@ -9,10 +9,12 @@ import {
   onSnapshot,
   addDoc,
   Timestamp,
+  orderBy,
 } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage"; //onSnapShot is real time but getDoc executed once
 import User from "../components/User";
 import MessageForm from "../components/MessageForm";
+import Message from "../components/Message";
 
 //******styles
 import styles from "./home.module.css";
@@ -23,6 +25,7 @@ const Home = () => {
   const [chat, setChat] = useState(""); //user who we chat with
   const [text, setText] = useState(""); //text message content
   const [img, setImg] = useState(""); // for media message
+  const [msgs, setMsgs] = useState([]);
 
   const user1 = auth.currentUser.uid; //user who is currently logged in
 
@@ -31,7 +34,22 @@ const Home = () => {
     // selecting user from left-side user list
     setChat(user);
     console.log(user);
+    const user2 = user.uid;
+    const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
+    const msgsRef = collection(db, "messages", id, "chat"); //refering to messages database and chat subcollection
+    const q = query(msgsRef, orderBy("createdAt", "asc")); // getting all messages from this user by order of time
+    onSnapshot(q, (querySnapshot) => {
+      //real-time message listener
+      let msgs = [];
+      querySnapshot.forEach((doc) => {
+        msgs.push(doc.data());
+      });
+      setMsgs(msgs);
+    });
   };
+
+  console.log(msgs, "msgs");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user2 = chat.uid;
@@ -39,13 +57,14 @@ const Home = () => {
 
     let url;
     if (img) {
+      //if user selected an image
       // for sending images in chat
       const imgRef = ref(
-        // getting image reference
+        // creating image reference
         storage,
         `images/${new Date().getTime()} - ${img.name}`
       );
-      const snap = await uploadBytes(imgRef, img);
+      const snap = await uploadBytes(imgRef, img); //upload image to firebase storage
       const dlurl = await getDownloadURL(ref(storage, snap.ref.fullPath));
       url = dlurl;
     }
@@ -88,6 +107,11 @@ const Home = () => {
           <>
             <div className={styles.message_user}>
               <h3>{chat.name}</h3>
+            </div>
+            <div className={styles.messages}>
+              {msgs.length
+                ? msgs.map((msg, i) => <Message key={i} msg={msg} user1={user1} />)
+                : null}
             </div>
             <MessageForm
               handleSubmit={handleSubmit}
