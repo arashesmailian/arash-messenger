@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
-//components
+//******components
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { updateDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
-//styles
+//******styles
 import styles from "./login.module.css";
 
 const Login = () => {
-  //states
+  //******states
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -21,7 +21,7 @@ const Login = () => {
   const { email, password, error, loading } = data;
   const navigate = useNavigate();
 
-  //functions
+  //******functions
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };

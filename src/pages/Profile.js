@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-//components
+//******components
 import Photo from "../assets/image1.jpg";
 import Camera from "../assets/svg/Camera";
 import Delete from "../assets/svg/Delete";
@@ -14,17 +14,17 @@ import {
 } from "firebase/storage";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 
-//styles
+//******styles
 import styles from "./profile.module.css";
 import { async } from "@firebase/util";
 
 const Profile = () => {
-  //states
+  //******states
   const [img, setImg] = useState("");
   const [user, setUser] = useState();
   const navigate = useNavigate();
 
-  //functions
+  //******functions
   const imgHandler = (e) => {
     setImg(e.target.files[0]);
   };

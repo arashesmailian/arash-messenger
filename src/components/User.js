@@ -1,14 +1,14 @@
 import React from "react";
 
-//components
+//******components
 import Img from "../assets/image1.jpg";
 
-//styles
+//******styles
 import styles from "./user.module.css";
 
-const User = ({ user }) => {
+const User = ({ user, selectUser }) => {
   return (
-    <div className={styles.user_wrapper}>
+    <div className={styles.user_wrapper} onClick={() => selectUser(user)}>
       <div className={styles.user_info}>
         <div className={styles.user_detail}>
           <img

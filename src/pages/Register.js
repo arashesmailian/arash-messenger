@@ -1,16 +1,16 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-//components
+//******components
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc, Timestamp } from "firebase/firestore";
 import { auth, db } from "../firebase";
-import { useNavigate } from "react-router-dom";
 
-//styles
+//******styles
 import styles from "./register.module.css";
 
 const Register = () => {
-  //states
+  //******states
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -22,7 +22,7 @@ const Register = () => {
   const { name, email, password, error, loading } = data;
   const navigate = useNavigate();
 
-  //functions
+  //******functions
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };

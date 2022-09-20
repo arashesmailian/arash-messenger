@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-//components
+//******components
 import AuthProvider from "./context/auth";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";

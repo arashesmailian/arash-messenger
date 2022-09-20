@@ -1,22 +1,22 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-//components
+//******components
 import { auth, db } from "../firebase";
 import { signOut } from "firebase/auth";
 import { updateDoc, doc } from "firebase/firestore";
 import { AuthContext } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 
-//styles
+//******styles
 import styles from "./navbar.module.css";
 
 const Navbar = () => {
-  //states
+  //******states
   const { user } = useContext(AuthContext); //creating context to checking if we have loged in user or not
 
   const navigate = useNavigate();
-  //functions
+  //******functions
   const handleSignout = async () => {
     await updateDoc(doc(db, "users", auth.currentUser.uid), {
       isOnline: false,

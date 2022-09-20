@@ -11,3 +11,17 @@
   border-right: 2px solid var(--color-6);
   overflow-y: auto;
 }
+.message_container {
+  position: relative;
+  width: 100%;
+}
+.message_user {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 2px solid var(--color-6);
+}
+.no_conv {
+  font-size: 20px;
+  color: var(--color-4);
+  text-align: center;
+}
